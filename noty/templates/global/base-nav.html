@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noty!</title>
+  <link rel="stylesheet" href="{% static 'css/nav-bar.css' %}">
+  <script src="{% static 'js/nav-bar.js' %}"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+  {% block head %}{% endblock head %}
+</head>
+
+<body>
+
+  <header>
+    <nav id='menu'>
+      <input type='checkbox' id='responsive-menu' onclick='updatemenu()'><label></label>
+      <ul>
+        <li><a href='{% url "my-notes" %}'>My Notes</a></li>
+        <li><a href='{% url "home" %}'>Feed</a></li>
+        <li><a href=''>Following</a></li>
+        {% if request.user.is_authenticated %}
+          <li>
+            <a class='dropdown-arrow' href='http://'>User</a>
+            <ul class='sub-menus'>
+              <li><a href='http://'>Profile</a></li>
+              <li><a href='http://'>Configuration</a></li>
+              <li><a href='{% url "exit" %}'>Logout</a></li>
+            </ul>
+          </li>
+        {% else %}
+          <li><a href='{% url "login" %}'>LogIn</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    {% block main %}
+    {% endblock main %}
+  </main>
+
+
+  {% block scripts %}{% endblock scripts %}
+</body>
+</html>
