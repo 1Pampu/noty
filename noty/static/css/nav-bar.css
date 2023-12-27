@@ -29,6 +29,12 @@
 	color: #FFFFFF;
 	font-size: 16px;
 }
+
+.active {
+    text-decoration: underline;
+	color: #fff;
+}
+
 #menu a.dropdown-arrow:after {
 	content: "\25BE";
 	margin-left: 5px;

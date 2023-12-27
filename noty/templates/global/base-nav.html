@@ -20,8 +20,8 @@
     <nav id='menu'>
       <input type='checkbox' id='responsive-menu' onclick='updatemenu()'><label></label>
       <ul>
-        <li><a href='{% url "my-notes" %}'>My Notes</a></li>
-        <li><a href='{% url "home" %}'>Feed</a></li>
+        <li {% if my_notes_active %}class="active"{% endif %}><a href='{% url "my-notes" %}'>My Notes</a></li>
+        <li {% if home_active %}class="active"{% endif %}><a href='{% url "home" %}'>Feed</a></li>
         <li><a href=''>Following</a></li>
         {% if request.user.is_authenticated %}
           <li>

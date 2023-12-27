@@ -2,7 +2,9 @@ from django.shortcuts import render
 
 # Create your views here.
 def home(request):
-    return render(request, 'feed/home.html')
+    context = {'home_active' : True}
+    return render(request, 'feed/home.html', context)
 
 def my_notes(request):
-    return render(request, 'feed/my-notes.html')
+    context = {'my_notes_active' : True}
+    return render(request, 'feed/my-notes.html', context)
