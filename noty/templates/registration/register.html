@@ -9,17 +9,17 @@
 
     <form action="" method="POST" class="d-flex align-items-center justify-content-center vh-100">
         {% csrf_token %}
-        <div class="card" style="width: 25rem; margin-bottom: 18rem">
+        <div class="card" style="width: 25rem;">
             <div class="card-body">
-              <h5 class="card-title">User Credentials</h5>
+              <h5 class="card-title">Create User</h5>
               {{form |crispy}}
 
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="submit">LogIn</button>
+                    <button class="btn btn-primary" type="submit">Register</button>
                 </div>
                 <hr>
                 <div class="d-grid gap-2">
-                    <a href="{% url 'register' %}" class="btn btn-success">Register</a>
+                    <a href="{% url 'login' %}" class="btn btn-success">LogIn</a>
                     <a href="{% url 'home' %}" class="btn btn-danger">Back</a>
                 </div>
             </div>

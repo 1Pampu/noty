@@ -22,10 +22,10 @@
       <ul>
         <li {% if my_notes_active %}class="active"{% endif %}><a href='{% url "my-notes" %}'>My Notes</a></li>
         <li {% if home_active %}class="active"{% endif %}><a href='{% url "home" %}'>Feed</a></li>
-        <li><a href=''>Following</a></li>
+        <li {% if following_active %}class="active"{% endif %}><a href='{% url "following" %}'>Following</a></li>
         {% if request.user.is_authenticated %}
           <li>
-            <a class='dropdown-arrow' href='http://'>User</a>
+            <a class='dropdown-arrow' href='http://'>{{user.username}}</a>
             <ul class='sub-menus'>
               <li><a href='http://'>Profile</a></li>
               <li><a href='http://'>Configuration</a></li>
