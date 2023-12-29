@@ -14,7 +14,3 @@ class NoteForm(ModelForm):
         if commit:
             instance.save()
         return instance
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['public'].initial = True

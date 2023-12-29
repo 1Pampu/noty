@@ -10,8 +10,8 @@ class Note(models.Model):
 
     color = models.IntegerField(choices = Color.choices, default = Color.AMARILLO)
     content = models.TextField(max_length = 1500, null = False)
-    date = models.DateField(auto_now_add = True)
-    public = models.BooleanField(null = False)
+    date = models.DateTimeField(auto_now_add = True)
+    private = models.BooleanField(null = False)
     stars = models.IntegerField(default = 0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
