@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from notes.models import Note
 
 # Create your views here.
 def home(request):
@@ -8,7 +9,8 @@ def home(request):
 
 @login_required
 def my_notes(request):
-    context = {'my_notes_active' : True}
+    results = Note.objects.filter(user = request.user)
+    context = {'my_notes_active' : True, 'notes' : results}
     return render(request, 'feed/my-notes.html', context)
 
 @login_required

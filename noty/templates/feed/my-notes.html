@@ -4,10 +4,27 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/create-button.css' %}">
+    <link rel="stylesheet" href="{% static 'css/note-colors.css' %}">
 {% endblock head %}
 
 {% block main %}
-    <h1>This is the user notes (My notes)</h1>
+
+    {% for note in notes %}
+
+    <div class="card" style="width: 18rem; background-color: var(--color{{note.color}})">
+        <div class="card-body">
+            <h5 class="card-title">{{note.user.username}}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{note.date}}</h6>
+            <p class="card-text">{{note.content}}</p>
+            <span>{{note.stars}}</span>
+            {% if note.private %}
+                <p>PRIVATE</p>
+            {% endif %}
+        </div>
+      </div>
+
+    {% endfor %}
 
     {% include "global/parts/create-button.html" %}
+
 {% endblock main %}
