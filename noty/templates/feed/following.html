@@ -1,5 +1,13 @@
 {% extends "global/base-nav.html" %}
 
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/create-button.css' %}">
+{% endblock head %}
+
 {% block main %}
     <h1>This is the Following page</h1>
+
+    {% include "global/parts/create-button.html" %}
 {% endblock main %}

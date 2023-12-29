@@ -1,0 +1,11 @@
+textarea{
+    width: 27.5rem;
+    border: 0px;
+    background-color: #FDFD96;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+label[for="id_content"]{
+    display: none;
+}
