@@ -12,6 +12,7 @@ class Note(models.Model):
     content = models.TextField(max_length = 1500, null = False)
     date = models.DateField(auto_now_add = True)
     public = models.BooleanField(null = False)
+    stars = models.IntegerField(default = 0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

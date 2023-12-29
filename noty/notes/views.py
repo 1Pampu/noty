@@ -7,8 +7,9 @@ from .forms import NoteForm
 def create_note(request):
     if request.method == 'POST':
         form = NoteForm(request.POST)
+
         if form.is_valid():
-            form.save(user=request.user)
+            form.save(user = request.user)
             return redirect('my-notes')
 
     context = {'form' : NoteForm()}
