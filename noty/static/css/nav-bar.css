@@ -6,8 +6,8 @@
 	background: #0099CC;
 	background: linear-gradient(to bottom,  #0099CC,  #FF99CC);
 	height: 47px;
-	border-radius: 12px;
 }
+
 #menu ul, #menu li {
 	margin: 0 auto;
 	padding: 0;
@@ -62,7 +62,7 @@
 #menu label:before {
 	font-size: 1.6em;
 	color: #FFFFFF;
-	content: "\2261"; 
+	content: "\2261";
 	margin-left: 20px;
 }
 #menu ul.sub-menus{
