@@ -17,9 +17,12 @@
                 <h5 class="card-title">{{note.user.username}}</h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary">{{note.date}}</h6>
                 <p class="card-text">{{note.content}}</p>
-                <span>{{note.stars}}</span>
+                <span>{{note.stars}} {{note.id}}</span>
                 {% if note.private %}
                     <p>PRIVATE</p>
+                {% endif %}
+                {% if note.user ==  user %}
+                    <a href="{% url 'delete-note' id=note.id %}">Delete</a>
                 {% endif %}
             </div>
         </div>

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Note(models.Model):
-    content = models.TextField(max_length = 1500, null = False)
+    content = models.TextField(max_length = 325, null = False)
 
     class Color(models.IntegerChoices):
         AMARILLO = 1, 'AMARILLO'
