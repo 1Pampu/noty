@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
 from .forms import NoteForm
 from .models import Note
 
@@ -18,6 +19,7 @@ def create_note(request):
     return render(request, 'notes/create.html', context)
 
 @login_required
+@require_http_methods(['DELETE'])
 def delete_note(request, id):
     note = get_object_or_404(Note, id = id)
 

@@ -9,10 +9,10 @@
 {% endblock head %}
 
 {% block main %}
-
+    {% csrf_token %}
     <div class="cards-container">
         {% for note in notes %}
-        <div class="card" style="width: 18rem; background-color: var(--color{{note.color}})">
+        <div class="card" style="width: 18rem; background-color: var(--color{{note.color}})" id="note-{{note.id}}">
             <div class="card-body">
                 <h5 class="card-title">{{note.user.username}}</h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary">{{note.date}}</h6>
@@ -22,13 +22,35 @@
                     <p>PRIVATE</p>
                 {% endif %}
                 {% if note.user ==  user %}
-                    <a href="{% url 'delete-note' id=note.id %}">Delete</a>
+                    <button onclick="delete_note({{note.id}})">Delete</button>
                 {% endif %}
             </div>
         </div>
         {% endfor %}
     </div>
 
+    <script>
+        function delete_note(id){
+            var url = "{% url 'delete-note' id=1 %}".replace('1', id)
+            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            fetch(url,{
+                method : 'DELETE',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                }})
+                .then(response => {
+                    if (!response.ok){
+                        throw new Error("Error deleting note!")
+                    }
+                    id_element = "note-" + id
+                    document.getElementById(id_element).remove()
+                })
+                .catch(error => {
+                    console.error("Error:", error)
+                })
+        }
+    </script>
     {% include "global/parts/create-button.html" %}
 
 {% endblock main %}
