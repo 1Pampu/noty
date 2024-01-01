@@ -23,4 +23,5 @@ urlpatterns = [
     path('auth/', include('user_auth.urls')),
     path('feed/', include('feed.urls')),
     path('notes/', include('notes.urls')),
+    path('stars/', include('stars.urls')),
 ]

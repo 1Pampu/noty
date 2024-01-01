@@ -20,8 +20,8 @@ def create_note(request):
 
 @login_required
 @require_http_methods(['DELETE'])
-def delete_note(request, id):
-    note = get_object_or_404(Note, id = id)
+def delete_note(request, note_id):
+    note = get_object_or_404(Note, id = note_id)
 
     if request.user != note.user:
         context = {'message' : 'You do not have permission to delete this!'}

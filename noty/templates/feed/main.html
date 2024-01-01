@@ -10,19 +10,26 @@
 
 {% block main %}
     {% csrf_token %}
+
     <div class="cards-container">
-        {% for note in notes %}
-        <div class="card" style="width: 18rem; background-color: var(--color{{note.color}})" id="note-{{note.id}}">
+        {% for item in notes %}
+        <div class="card" style="width: 18rem; background-color: var(--color{{item.note.color}})" id="note-{{item.note.id}}">
             <div class="card-body">
-                <h5 class="card-title">{{note.user.username}}</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">{{note.date}}</h6>
-                <p class="card-text">{{note.content}}</p>
-                <span>{{note.stars}} {{note.id}}</span>
-                {% if note.private %}
+                <h5 class="card-title">{{item.note.user.username}}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{item.note.date}}</h6>
+                <p class="card-text">{{item.note.content}}</p>
+                {% if item.note.private %}
                     <p>PRIVATE</p>
+                {% else %}
+                    <span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span>
+                    {% if not item.star %}
+                        <button id="note-{{item.note.id}}-stars-button" onclick="star_note({{item.note.id}})">Star</button>
+                    {% else %}
+                        <button id="note-{{item.note.id}}-stars-button" onclick="unstar_note({{item.note.id}})">UnStar</button>
+                    {% endif %}
                 {% endif %}
-                {% if note.user ==  user %}
-                    <button onclick="delete_note({{note.id}})">Delete</button>
+                {% if item.note.user ==  user %}
+                    <button onclick="delete_note({{item.note.id}})">Delete</button>
                 {% endif %}
             </div>
         </div>
@@ -31,7 +38,7 @@
 
     <script>
         function delete_note(id){
-            var url = "{% url 'delete-note' id=1 %}".replace('1', id)
+            var url = "{% url 'delete-note' note_id=1 %}".replace('1', id)
             var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
             fetch(url,{
                 method : 'DELETE',
@@ -50,7 +57,65 @@
                     console.error("Error:", error)
                 })
         }
-    </script>
-    {% include "global/parts/create-button.html" %}
 
+        function star_note(id){
+            var url = "{% url 'stars' note_id=1 %}".replace('1', id)
+            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            fetch(url,{
+                method : 'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                }})
+                .then(response => {
+                    if (!response.ok){
+                        throw new Error("Error staring note!")
+                    }
+                    id_element = "note-" + id + "-stars"
+                    var spanElement = document.getElementById(id_element)
+                    stars = parseInt(spanElement.innerText,10)
+                    newStars = stars + 1
+                    spanElement.innerText = newStars
+
+                    id_button = id_element + "-button"
+                    var buttonElement = document.getElementById(id_button)
+                    buttonElement.setAttribute( "onClick", "unstar_note("+ id +");");
+                    buttonElement.innerText = 'UnStar'
+                })
+                .catch(error => {
+                    console.error("Error:", error)
+                })
+        }
+
+        function unstar_note(id){
+            var url = "{% url 'stars' note_id=1 %}".replace('1', id)
+            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            fetch(url,{
+                method : 'DELETE',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                }})
+                .then(response => {
+                    if (!response.ok){
+                        throw new Error("Error unstaring note!")
+                    }
+                    id_element = "note-" + id + "-stars"
+                    var spanElement = document.getElementById(id_element)
+                    stars = parseInt(spanElement.innerText,10)
+                    newStars = stars - 1
+                    spanElement.innerText = newStars
+
+                    id_button = id_element + "-button"
+                    var buttonElement = document.getElementById(id_button)
+                    buttonElement.setAttribute( "onClick", "star_note("+ id +");");
+                    buttonElement.innerText = 'Star'
+                })
+                .catch(error => {
+                    console.error("Error:", error)
+                })
+        }
+    </script>
+
+    {% include "global/parts/create-button.html" %}
 {% endblock main %}
