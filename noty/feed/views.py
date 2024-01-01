@@ -7,9 +7,13 @@ from stars.models import Star
 def home(request):
     results = Note.objects.filter(private = 0).order_by('-date')
     notes = []
-    for note in results:
-        stared = Star.objects.filter(user = request.user, note = note).exists()
-        notes.append({'note' : note, 'star' : stared})
+    if request.user.is_authenticated:
+        for note in results:
+            stared = Star.objects.filter(user = request.user, note = note).exists()
+            notes.append({'note' : note, 'star' : stared})
+    else:
+        for note in results:
+            notes.append({'note' : note, 'star' : False})
     context = {'home_active' : True, 'notes' : notes}
 
     return render(request, 'feed/main.html', context)

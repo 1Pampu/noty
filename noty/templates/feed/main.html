@@ -22,10 +22,14 @@
                     <p>PRIVATE</p>
                 {% else %}
                     <span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span>
-                    {% if not item.star %}
-                        <button id="note-{{item.note.id}}-stars-button" onclick="star_note({{item.note.id}})">Star</button>
+                    {% if user.is_authenticated %}
+                        {% if not item.star %}
+                            <button id="note-{{item.note.id}}-stars-button" onclick="star_note({{item.note.id}})">Star</button>
+                        {% else %}
+                            <button id="note-{{item.note.id}}-stars-button" onclick="unstar_note({{item.note.id}})">UnStar</button>
+                        {% endif %}
                     {% else %}
-                        <button id="note-{{item.note.id}}-stars-button" onclick="unstar_note({{item.note.id}})">UnStar</button>
+                        <a href="{% url 'login' %}">Star</a>
                     {% endif %}
                 {% endif %}
                 {% if item.note.user ==  user %}
@@ -36,86 +40,88 @@
         {% endfor %}
     </div>
 
-    <script>
-        function delete_note(id){
-            var url = "{% url 'delete-note' note_id=1 %}".replace('1', id)
-            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            fetch(url,{
-                method : 'DELETE',
-                headers:{
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
-                }})
-                .then(response => {
-                    if (!response.ok){
-                        throw new Error("Error deleting note!")
-                    }
-                    id_element = "note-" + id
-                    document.getElementById(id_element).remove()
-                })
-                .catch(error => {
-                    console.error("Error:", error)
-                })
-        }
+    {% if user.is_authenticated %}
+        <script>
+            function delete_note(id){
+                var url = "{% url 'delete-note' note_id=1 %}".replace('1', id)
+                var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                fetch(url,{
+                    method : 'DELETE',
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    }})
+                    .then(response => {
+                        if (!response.ok){
+                            throw new Error("Error deleting note!")
+                        }
+                        id_element = "note-" + id
+                        document.getElementById(id_element).remove()
+                    })
+                    .catch(error => {
+                        console.error("Error:", error)
+                    })
+            }
 
-        function star_note(id){
-            var url = "{% url 'stars' note_id=1 %}".replace('1', id)
-            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            fetch(url,{
-                method : 'POST',
-                headers:{
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
-                }})
-                .then(response => {
-                    if (!response.ok){
-                        throw new Error("Error staring note!")
-                    }
-                    id_element = "note-" + id + "-stars"
-                    var spanElement = document.getElementById(id_element)
-                    stars = parseInt(spanElement.innerText,10)
-                    newStars = stars + 1
-                    spanElement.innerText = newStars
+            function star_note(id){
+                var url = "{% url 'stars' note_id=1 %}".replace('1', id)
+                var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                fetch(url,{
+                    method : 'POST',
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    }})
+                    .then(response => {
+                        if (!response.ok){
+                            throw new Error("Error staring note!")
+                        }
+                        id_element = "note-" + id + "-stars"
+                        var spanElement = document.getElementById(id_element)
+                        stars = parseInt(spanElement.innerText,10)
+                        newStars = stars + 1
+                        spanElement.innerText = newStars
 
-                    id_button = id_element + "-button"
-                    var buttonElement = document.getElementById(id_button)
-                    buttonElement.setAttribute( "onClick", "unstar_note("+ id +");");
-                    buttonElement.innerText = 'UnStar'
-                })
-                .catch(error => {
-                    console.error("Error:", error)
-                })
-        }
+                        id_button = id_element + "-button"
+                        var buttonElement = document.getElementById(id_button)
+                        buttonElement.setAttribute( "onClick", "unstar_note("+ id +");");
+                        buttonElement.innerText = 'UnStar'
+                    })
+                    .catch(error => {
+                        console.error("Error:", error)
+                    })
+            }
 
-        function unstar_note(id){
-            var url = "{% url 'stars' note_id=1 %}".replace('1', id)
-            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            fetch(url,{
-                method : 'DELETE',
-                headers:{
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
-                }})
-                .then(response => {
-                    if (!response.ok){
-                        throw new Error("Error unstaring note!")
-                    }
-                    id_element = "note-" + id + "-stars"
-                    var spanElement = document.getElementById(id_element)
-                    stars = parseInt(spanElement.innerText,10)
-                    newStars = stars - 1
-                    spanElement.innerText = newStars
+            function unstar_note(id){
+                var url = "{% url 'stars' note_id=1 %}".replace('1', id)
+                var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                fetch(url,{
+                    method : 'DELETE',
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    }})
+                    .then(response => {
+                        if (!response.ok){
+                            throw new Error("Error unstaring note!")
+                        }
+                        id_element = "note-" + id + "-stars"
+                        var spanElement = document.getElementById(id_element)
+                        stars = parseInt(spanElement.innerText,10)
+                        newStars = stars - 1
+                        spanElement.innerText = newStars
 
-                    id_button = id_element + "-button"
-                    var buttonElement = document.getElementById(id_button)
-                    buttonElement.setAttribute( "onClick", "star_note("+ id +");");
-                    buttonElement.innerText = 'Star'
-                })
-                .catch(error => {
-                    console.error("Error:", error)
-                })
-        }
-    </script>
+                        id_button = id_element + "-button"
+                        var buttonElement = document.getElementById(id_button)
+                        buttonElement.setAttribute( "onClick", "star_note("+ id +");");
+                        buttonElement.innerText = 'Star'
+                    })
+                    .catch(error => {
+                        console.error("Error:", error)
+                    })
+            }
+        </script>
+    {% endif %}
 
     {% include "global/parts/create-button.html" %}
 {% endblock main %}
