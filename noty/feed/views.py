@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from notes.models import Note
 from stars.models import Star
+from follows.models import Follow
 
 # Create your views here.
 def home(request):
@@ -31,10 +32,11 @@ def my_notes(request):
 
 @login_required
 def following(request):
-    context = {'following_active' : True}
-    # notes = []
-    # for note in results:
-    #     stared = Star.objects.filter(user = request.user, note = note).exists()
-    #     notes.append({'note' : note, 'star' : stared})
-    # context = {'home_active' : True, 'notes' : notes}
+    following = Follow.objects.filter(follower = request.user).values_list('followed', flat=True)
+    results = Note.objects.filter(user__in = following, private = 0)
+    notes = []
+    for note in results:
+        stared = Star.objects.filter(user = request.user, note = note).exists()
+        notes.append({'note' : note, 'star' : stared})
+    context = {'following_active' : True, 'notes' : notes}
     return render(request, 'feed/main.html', context)
