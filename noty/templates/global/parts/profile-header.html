@@ -1,0 +1,18 @@
+<h1>{{user_visiting.username}}</h1>
+<h2>Followers: {{user_visiting.followers}}</h2>
+<h2>Following: {{user_visiting.following}}</h2>
+<h2>Notes: {{user_visiting.total_notes}}</h2>
+<h2>Stars: {{user_visiting.stars}}</h2>
+{% if user.username == user_visiting.username %}
+{% elif user_visiting.actual_following == False %}
+    <form action="" method='POST'>
+        {% csrf_token %}
+        <button type='submit'>Follow</button>
+    </form>
+{% elif user_visiting.actual_following %}
+    <form action="" method='POST'>
+        {% csrf_token %}
+        <input type="hidden" name="_method" value="DELETE">
+        <button type='submit'>UnFollow</button>
+    </form>
+{% endif %}

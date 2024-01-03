@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'user_auth',
     'feed',
     'stars',
+    'follows',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
