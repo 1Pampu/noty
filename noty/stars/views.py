@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from notes.models import Note
 from .models import Star
+from user_auth.models import UserInfo
 
 # Create your views here.
 @login_required
@@ -19,6 +20,9 @@ def handle_stars(request, note_id):
         star.save()
         note.stars += 1
         note.save()
+        user_info, _ = UserInfo.objects.get_or_create(user = note.user)
+        user_info.stars += 1
+        user_info.save()
         return JsonResponse({'message' : 'Succesfully stared!'})
 
     if request.method == 'DELETE':
@@ -30,6 +34,9 @@ def handle_stars(request, note_id):
         star.delete()
         note.stars -= 1
         note.save()
+        user_info = UserInfo.objects.get(user = note.user)
+        user_info.stars -= 1
+        user_info.save()
         return JsonResponse({'message' : 'Succesfully unstared!'})
 
     return JsonResponse({'star' : already_stared})

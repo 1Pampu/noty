@@ -17,3 +17,6 @@
     </form>
 {% endif %}
 <hr>
+<a href="{% url 'profile' user=user_visiting.username %}">Notes</a>
+<a href="{% url 'profile-stars' user=user_visiting.username %}">Stars</a>
+<hr>

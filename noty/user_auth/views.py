@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout, authenticate, login
 from .forms import CustomUserCreationForm
+from .models import UserInfo
 
 # Create your views here.
 def exit(request):
@@ -12,7 +13,8 @@ def register(request):
         user_creation_form = CustomUserCreationForm(data = request.POST)
 
         if user_creation_form.is_valid():
-            user_creation_form.save()
+            new_user = user_creation_form.save()
+            UserInfo.objects.create(user = new_user)
             user = authenticate(username=user_creation_form.cleaned_data['username'], password=user_creation_form.cleaned_data['password1'])
             login(request, user)
             return redirect('home')

@@ -1,34 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Follow
 from notes.models import Note
 from django.contrib.auth.models import User
 from stars.models import Star
-from django.db.models import Sum
+from .utils import follow_button, get_user_data
 
 # Create your views here.
 @login_required
 def profile(request, user):
     user = get_object_or_404(User, username = user)
-
-    if request.method == 'POST':
-        if request.POST.get('_method') == 'DELETE':
-            try:
-                follow = get_object_or_404(Follow, follower = request.user, followed = user)
-                follow.delete()
-            except Exception as Error:
-                context = {'message' : Error}
-                return render(request, 'global/error.html', context)
-        else:
-            try:
-                follow = Follow(follower = request.user, followed = user)
-                follow.save()
-            except Exception as Error:
-                context = {'message' : Error}
-                return render(request, 'global/error.html', context)
-
-    if request.method == 'DELETE':
-        pass
+    follow_button(request, user)
 
     results = Note.objects.filter(private = 0, user = user).order_by('-date')
     notes = []
@@ -36,21 +17,21 @@ def profile(request, user):
         stared = Star.objects.filter(user = request.user, note = note).exists()
         notes.append({'note' : note, 'star' : stared})
 
-    user_data = {}
-    actual_following = Follow.objects.filter(follower = request.user, followed = user).exists()
-    user_data['actual_following'] = actual_following
+    user_data = get_user_data(request, user)
+    context = {'notes' : notes, 'user_visiting' : user_data, 'profile' : True}
+    return render(request, 'feed/main.html', context)
 
-    followers = Follow.objects.filter(followed = user).count()
-    user_data['followers'] = followers
+@login_required
+def profile_stars(request, user):
+    user = get_object_or_404(User, username = user)
+    follow_button(request, user)
 
-    following = Follow.objects.filter(follower = user).count()
-    user_data['following'] = following
+    notes_stared = Star.objects.filter(user = user).values_list('note', flat = True)
+    results = Note.objects.filter(private = 0, id__in=notes_stared).order_by('-date')
+    notes = []
+    for note in results:
+        notes.append({'note' : note, 'star' : True})
 
-    sum_stars = results.aggregate(Sum('stars'))['stars__sum']
-    user_data['stars'] = sum_stars
-
-    user_data['total_notes'] = results.count()
-    user_data['username'] = user.username
-
+    user_data = get_user_data(request, user)
     context = {'notes' : notes, 'user_visiting' : user_data, 'profile' : True}
     return render(request, 'feed/main.html', context)
