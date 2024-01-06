@@ -30,7 +30,6 @@
             <a class='dropdown-arrow' href='{% url "profile" user=user.username %}'>{{user.username}}</a>
             <ul class='sub-menus'>
               <li><a href='{% url "profile" user=user.username %}'>Profile</a></li>
-              <li><a href='http://'>Configuration</a></li>
               <li><a href='{% url "exit" %}'>Logout</a></li>
             </ul>
           </li>

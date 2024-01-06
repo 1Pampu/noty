@@ -4,9 +4,7 @@ from user_auth.models import UserInfo
 
 def follow_button(request, user):
     if request.method == 'POST':
-        print('post')
         if request.POST.get('_method') == 'DELETE':
-            print('delete')
             try:
                 follow = get_object_or_404(Follow, follower = request.user, followed = user)
                 follow.delete()
@@ -21,12 +19,10 @@ def follow_button(request, user):
                 return render(request, 'global/error.html', context)
 
         else:
-            print('follow')
             try:
                 follow = Follow(follower = request.user, followed = user)
                 follow.save()
                 user_followed_info, _ = UserInfo.objects.get_or_create(user = user)
-                print(user_followed_info)
                 user_followed_info.followers += 1
                 user_followed_info.save()
                 user_info, _ = UserInfo.objects.get_or_create(user = request.user)

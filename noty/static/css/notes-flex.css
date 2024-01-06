@@ -3,3 +3,9 @@
     flex-wrap: wrap;
     gap: 20px;
 }
+
+.user-anchor-name{
+    text-decoration: none;
+    color:black;
+    font-weight: 600;
+}

@@ -28,6 +28,7 @@
 
 #user-follow-container{
     margin-right: 30px;
+    min-width: 100px;
 }
 
 #follow-button{
