@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +26,5 @@ urlpatterns = [
     path('notes/', include('notes.urls')),
     path('stars/', include('stars.urls')),
     path('follows/', include('follows.urls')),
+    path('', lambda request: redirect('home')),
 ]

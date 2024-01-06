@@ -6,10 +6,14 @@ class Note(models.Model):
     content = models.TextField(max_length = 325, null = False)
 
     class Color(models.IntegerChoices):
-        AMARILLO = 1, 'AMARILLO'
-        VERDE = 2, 'VERDE'
+        Yellow = 1, 'Yellow'
+        Green = 2, 'Green'
+        Red = 3, 'Red'
+        Orange = 4, 'Orange'
+        Blue = 5, 'Blue'
+        Pink = 6, 'Pink'
 
-    color = models.IntegerField(choices = Color.choices, default = Color.AMARILLO)
+    color = models.IntegerField(choices = Color.choices, default = Color.Yellow)
     date = models.DateTimeField(auto_now_add = True)
     private = models.BooleanField(null = False)
     stars = models.IntegerField(default = 0)
