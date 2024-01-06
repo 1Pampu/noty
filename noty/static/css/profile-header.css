@@ -1,0 +1,47 @@
+#notes-stars{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#notes-stars a{
+    text-decoration: none;
+    color: black;
+}
+
+.active{
+    text-decoration: underline  !IMPORTANT;
+}
+
+#header-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.stats-title{
+    color: grey;
+}
+
+.stats-number{
+    color: black;
+    font-weight: 600;
+}
+
+#user-follow-container{
+    margin-right: 30px;
+}
+
+#follow-button{
+    background-color: #FF6961;
+    border-radius: 2px;
+    border: 1px solid black;
+    width: 100%;
+    color: white;
+}
+
+#unfollow-button{
+    background-color: lightslategray;
+    border-radius: 2px;
+    border: 1px solid black;
+    width: 100%;
+    color: black;
+}

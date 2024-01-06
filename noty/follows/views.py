@@ -18,7 +18,7 @@ def profile(request, user):
         notes.append({'note' : note, 'star' : stared})
 
     user_data = get_user_data(request, user)
-    context = {'notes' : notes, 'user_visiting' : user_data, 'profile' : True}
+    context = {'notes' : notes, 'user_visiting' : user_data, 'profile' : True, 'profile_note_active' : True}
     return render(request, 'feed/main.html', context)
 
 @login_required
@@ -33,5 +33,5 @@ def profile_stars(request, user):
         notes.append({'note' : note, 'star' : True})
 
     user_data = get_user_data(request, user)
-    context = {'notes' : notes, 'user_visiting' : user_data, 'profile' : True}
+    context = {'notes' : notes, 'user_visiting' : user_data, 'profile' : True, 'profile_stars_active' : True}
     return render(request, 'feed/main.html', context)

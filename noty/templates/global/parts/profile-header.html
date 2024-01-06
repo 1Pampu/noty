@@ -1,27 +1,33 @@
-<h1>{{user_visiting.username}}</h1>
-<h2>Followers: {{user_visiting.followers}}</h2>
-<h2>Following: {{user_visiting.following}}</h2>
-<h2>Notes: {{user_visiting.total_notes}}</h2>
-<h2>Stars: {{user_visiting.stars}}</h2>
-{% if user.username == user_visiting.username %}
-{% elif user_visiting.actual_following == False %}
-    <form action="" method='POST'>
-        {% csrf_token %}
-        <button type='submit'>Follow</button>
-    </form>
-{% elif user_visiting.actual_following %}
-    <form action="" method='POST'>
-        {% csrf_token %}
-        <input type="hidden" name="_method" value="DELETE">
-        <button type='submit'>UnFollow</button>
-    </form>
-{% endif %}
+<div id='header-container'>
+    <div id='user-follow-container'>
+        <h1>{{user_visiting.username}}</h1>
+        {% if user.username == user_visiting.username %}
+        {% elif user_visiting.actual_following == False %}
+            <form action="" method='POST'>
+                {% csrf_token %}
+                <button type='submit' id='follow-button'>Follow</button>
+            </form>
+        {% elif user_visiting.actual_following %}
+            <form action="" method='POST'>
+                {% csrf_token %}
+                <input type="hidden" name="_method" value="DELETE">
+                <button type='submit'  id='unfollow-button'>UnFollow</button>
+            </form>
+        {% endif %}
+    </div>
+    <div>
+        <h6 class='stats-title'>Followers: <span class='stats-number'>{{user_visiting.followers}}</span></h6>
+        <h6 class='stats-title'>Following: <span class='stats-number'>{{user_visiting.following}}</span></h6>
+        <h6 class='stats-title'>Notes: <span class='stats-number'>{{user_visiting.total_notes}}</span></h6>
+        <h6 class='stats-title'>Stars: <span class='stats-number'>{{user_visiting.stars}}</span></h6>
+    </div>
+</div>
 
 <hr>
 
 <div id='notes-stars'>
-    <a href="{% url 'profile' user=user_visiting.username %}">Notes</a>
-    <a href="{% url 'profile-stars' user=user_visiting.username %}">Stars</a>
+    <a href="{% url 'profile' user=user_visiting.username %}"  {% if profile_note_active %}class="active"{% endif %}>Notes</a>
+    <a href="{% url 'profile-stars' user=user_visiting.username %}"  {% if profile_stars_active %}class="active"{% endif %}>Stars</a>
 </div>
 
 <hr>

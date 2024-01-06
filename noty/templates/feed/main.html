@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="{% static 'css/create-button.css' %}">
     <link rel="stylesheet" href="{% static 'css/note-colors.css' %}">
     <link rel="stylesheet" href="{% static 'css/notes-flex.css' %}">
+    {% if profile %}
+        <link rel="stylesheet" href="{% static 'css/profile-header.css' %}">
+    {% endif %}
 {% endblock head %}
 
 {% block main %}
