@@ -11,19 +11,22 @@
                 {% if item.note.private %}
                     <p>PRIVATE</p>
                 {% else %}
-                    <span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span>
                     {% if user.is_authenticated %}
                         {% if not item.star %}
-                            <button id="note-{{item.note.id}}-stars-button" onclick="star_note({{item.note.id}})">Star</button>
+                            <button id="note-{{item.note.id}}-stars-button" class="star-button" onclick="star_note({{item.note.id}})">
+                                <span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-regular fa-star star"></i>
+                            </button>
                         {% else %}
-                            <button id="note-{{item.note.id}}-stars-button" onclick="unstar_note({{item.note.id}})">UnStar</button>
+                            <button id="note-{{item.note.id}}-stars-button" class="star-button" onclick="unstar_note({{item.note.id}})">
+                                <span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-solid fa-star star"></i>
+                            </button>
                         {% endif %}
                     {% else %}
-                        <a href="{% url 'login' %}">Star</a>
+                        <a href="{% url 'login' %}"><span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-regular fa-star star"></i></a>
                     {% endif %}
                 {% endif %}
                 {% if item.note.user ==  user %}
-                    <button onclick="delete_note({{item.note.id}})">Delete</button>
+                    <button onclick="delete_note({{item.note.id}})" class="star-button"><i class="fa-solid fa-trash"></i></button>
                 {% endif %}
             </div>
         </div>
@@ -73,12 +76,11 @@
                     var spanElement = document.getElementById(id_element)
                     stars = parseInt(spanElement.innerText,10)
                     newStars = stars + 1
-                    spanElement.innerText = newStars
 
                     id_button = id_element + "-button"
                     var buttonElement = document.getElementById(id_button)
                     buttonElement.setAttribute( "onClick", "unstar_note("+ id +");");
-                    buttonElement.innerText = 'UnStar'
+                    buttonElement.innerHTML = '<span id="note-'+id+'-stars">'+ newStars +'</span><i class="fa-solid fa-star star"></i>'
                 })
                 .catch(error => {
                     console.error("Error:", error)
@@ -102,12 +104,11 @@
                     var spanElement = document.getElementById(id_element)
                     stars = parseInt(spanElement.innerText,10)
                     newStars = stars - 1
-                    spanElement.innerText = newStars
 
                     id_button = id_element + "-button"
                     var buttonElement = document.getElementById(id_button)
                     buttonElement.setAttribute( "onClick", "star_note("+ id +");");
-                    buttonElement.innerText = 'Star'
+                    buttonElement.innerHTML = '<span id="note-'+id+'-stars">'+ newStars +'</span><i class="fa-regular fa-star star"></i>'
                 })
                 .catch(error => {
                     console.error("Error:", error)

@@ -9,3 +9,21 @@
     color:black;
     font-weight: 600;
 }
+
+.star-button{
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 7px;
+    border-radius: 50px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+    margin-right: 15px;
+}
+
+.star-button:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.star{
+    margin-left: 5px;
+}

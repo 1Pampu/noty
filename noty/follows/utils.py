@@ -3,7 +3,7 @@ from .models import Follow
 from user_auth.models import UserInfo
 
 def follow_button(request, user):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         if request.POST.get('_method') == 'DELETE':
             try:
                 follow = get_object_or_404(Follow, follower = request.user, followed = user)
@@ -38,8 +38,9 @@ def get_user_data(request, user):
 
     user_data['username'] = user.username
 
-    actual_following = Follow.objects.filter(follower = request.user, followed = user).exists()
-    user_data['actual_following'] = actual_following
+    if request.user.is_authenticated:
+        actual_following = Follow.objects.filter(follower = request.user, followed = user).exists()
+        user_data['actual_following'] = actual_following
 
     user_data['followers'] = user_info.followers
     user_data['following'] = user_info.following
