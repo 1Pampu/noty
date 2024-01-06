@@ -33,3 +33,17 @@
 .card-body{
     padding-bottom: 10px;
 }
+
+.user-time-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.user-time-container h6{
+    margin-bottom: 0 !IMPORTANT;
+}
+
+.user-time-container h5{
+    margin-right: 8px !IMPORTANT;
+}
