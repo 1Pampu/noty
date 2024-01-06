@@ -18,6 +18,8 @@
     box-sizing: border-box;
     transition: background-color 0.3s ease;
     margin-right: 15px;
+    color: black;
+    text-decoration: none;
 }
 
 .star-button:hover{
@@ -26,4 +28,8 @@
 
 .star{
     margin-left: 5px;
+}
+
+.card-body{
+    padding-bottom: 10px;
 }

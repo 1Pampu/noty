@@ -22,7 +22,7 @@
                             </button>
                         {% endif %}
                     {% else %}
-                        <a href="{% url 'login' %}"><span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-regular fa-star star"></i></a>
+                        <a href="{% url 'login' %}" class='star-button'><span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-regular fa-star star"></i></a>
                     {% endif %}
                 {% endif %}
                 {% if item.note.user ==  user %}
