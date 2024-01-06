@@ -1,11 +1,16 @@
 textarea{
-    width: 27.5rem;
+    width: 100%;
     border: 0px;
     background-color: #FDFD96;
     border-radius: 15px;
-    padding: 5px;
+    padding: 15px;
+    height: 225px;
 }
 
 label[for="id_content"]{
     display: none;
+}
+
+.buttons-container{
+    margin-top: 15px;
 }

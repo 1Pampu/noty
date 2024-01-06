@@ -3,7 +3,7 @@
 <div class="cards-container">
     {% if notes %}
         {% for item in notes %}
-        <div class="card" style="width: 18rem; background-color: var(--color{{item.note.color}})" id="note-{{item.note.id}}">
+        <div class="card" style="background-color: var(--color{{item.note.color}})" id="note-{{item.note.id}}">
             <div class="card-body">
                 <div class='user-time-container'>
                     <h5 class="card-title"><a class="user-anchor-name" href="{% url 'profile' user=item.note.user.username %}">{{item.note.user.username}}</a></h5>
