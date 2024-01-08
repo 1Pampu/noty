@@ -8,6 +8,16 @@
 .card{
     flex: 1 1 18rem;
     min-width: 0;
+    max-width: 320px;
+}
+
+.icons-container{
+    margin-top: auto;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
 }
 
 .card-text{

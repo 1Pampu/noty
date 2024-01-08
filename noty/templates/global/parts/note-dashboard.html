@@ -10,26 +10,28 @@
                     <h6 class="card-subtitle mb-2 text-body-secondary">{{item.note.date | timesince}}</h6>
                 </div>
                 <p class="card-text">{{item.note.content}}</p>
-                {% if item.note.private %}
-                    <i class="fa-solid fa-lock star-button" style="color: #000000;"></i>
-                {% else %}
-                    {% if user.is_authenticated %}
-                        {% if not item.star %}
-                            <button id="note-{{item.note.id}}-stars-button" class="star-button" onclick="star_note({{item.note.id}})">
-                                <span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-regular fa-star star"></i>
-                            </button>
-                        {% else %}
-                            <button id="note-{{item.note.id}}-stars-button" class="star-button" onclick="unstar_note({{item.note.id}})">
-                                <span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-solid fa-star star"></i>
-                            </button>
-                        {% endif %}
+                <div class="icons-container">
+                    {% if item.note.private %}
+                        <i class="fa-solid fa-lock star-button" style="color: #000000;"></i>
                     {% else %}
-                        <a href="{% url 'login' %}" class='star-button'><span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-regular fa-star star"></i></a>
+                        {% if user.is_authenticated %}
+                            {% if not item.star %}
+                                <button id="note-{{item.note.id}}-stars-button" class="star-button" onclick="star_note({{item.note.id}})">
+                                    <span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-regular fa-star star"></i>
+                                </button>
+                            {% else %}
+                                <button id="note-{{item.note.id}}-stars-button" class="star-button" onclick="unstar_note({{item.note.id}})">
+                                    <span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-solid fa-star star"></i>
+                                </button>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'login' %}" class='star-button'><span id="note-{{item.note.id}}-stars">{{item.note.stars}}</span><i class="fa-regular fa-star star"></i></a>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-                {% if item.note.user ==  user %}
-                    <button onclick="delete_note({{item.note.id}})" class="star-button"><i class="fa-solid fa-trash"></i></button>
-                {% endif %}
+                    {% if item.note.user ==  user %}
+                        <button onclick="delete_note({{item.note.id}})" class="star-button"><i class="fa-solid fa-trash"></i></button>
+                    {% endif %}
+                </div>
             </div>
         </div>
         {% endfor %}
