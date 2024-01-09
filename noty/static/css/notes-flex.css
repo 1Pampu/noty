@@ -68,3 +68,14 @@
     margin-right: 8px !IMPORTANT;
     font-size: 22px;
 }
+
+.paginator{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.actual-page{
+    color: blueviolet;
+}

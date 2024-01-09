@@ -40,6 +40,13 @@
     {% endif %}
 </div>
 
+<div class="paginator">
+    {% for pages in paginator.page_range %}
+    <a href="?page={{ pages }}" {% if page.number == pages %}class="actual-page"{% endif %}>{{ pages }}</a>
+    {% endfor %}
+</div>
+
+
 {% if user.is_authenticated %}
     <script>
         function delete_note(id){
