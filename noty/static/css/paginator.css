@@ -1,0 +1,14 @@
+.paginator{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.actual-page{
+    color: blueviolet;
+}
+
+.no-notes{
+    text-align: center;
+}

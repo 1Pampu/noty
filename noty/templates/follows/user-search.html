@@ -1,0 +1,35 @@
+{% extends "global/base-nav.html" %}
+{% load static %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/user-search.css' %}">
+{% endblock head %}
+
+{% block main %}
+{% if users_info %}
+    <div class="results-container">
+        {% for user in users_info %}
+            <div class="card" style="width: 18rem;">
+                <a href="{% url 'profile' user=user.user.username %}" class="user-link">
+                    <div class="card-body">
+                    <h2 class="card-title username">{{user.user.username}}</h2>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Followers: <span class='stats-number'>{{user.followers}}</span></h6>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Stars: <span class='stats-number'>{{user.stars}}</span></h6>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="paginator">
+        {% for pages in paginator.page_range %}
+            <a href="?page={{ pages }}" {% if page.number == pages %}class="actual-page"{% endif %}>{{ pages }}</a>
+        {% endfor %}
+    </div>
+{% else %}
+    <h2>No users found!</h2>
+{% endif %}
+
+
+
+{% endblock main %}

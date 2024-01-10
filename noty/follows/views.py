@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from notes.models import Note
 from django.contrib.auth.models import User
+from user_auth.models import UserInfo
 from stars.models import Star
 from .utils import follow_button, get_user_data
 from feed.utils import paginate_items
@@ -50,3 +51,13 @@ def profile_stars(request, user):
     user_data = get_user_data(request, user)
     context = {'notes' : notes, 'user_visiting' : user_data, 'profile' : True, 'profile_stars_active' : True, 'paginator': paginator, 'page': page}
     return render(request, 'feed/main.html', context)
+
+def user_search(request):
+    search = request.GET.get('search', '')
+    data_listed = UserInfo.objects.filter(user__username__contains=search).order_by('-followers')
+
+    paginator, page = paginate_items(request, data_listed, items_per_page = 35)
+
+    context = {'users_info': page, 'paginator': paginator, 'page': page}
+
+    return render(request, 'follows/user-search.html', context)

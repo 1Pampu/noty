@@ -42,7 +42,7 @@ def my_notes(request):
 @login_required
 def following(request):
     following = Follow.objects.filter(follower = request.user).values_list('followed', flat=True)
-    results = Note.objects.filter(user__in = following, private = 0)
+    results = Note.objects.filter(user__in = following, private = 0).order_by('-date')
 
     paginator, page = paginate_items(request, results)
 
