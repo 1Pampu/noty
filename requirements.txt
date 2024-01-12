@@ -3,3 +3,4 @@ django-crispy-forms
 crispy-bootstrap5
 django-seed
 psycopg2-binary
+django-environ
