@@ -8,8 +8,6 @@ With a user-friendly and easy-to-navigate design, Noty! provides users with a se
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`DEBUG`= True or False (Debug Mode)
-
 `SECRET_KEY`= Django secret key
 
 `ENGINE`= Django DataBase engine (django.db.backends.mysql)

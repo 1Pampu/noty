@@ -36,11 +36,14 @@
             </div>
         {% endfor %}
     </div>
-    <div class="paginator">
-        {% for pages in paginator.page_range %}
-            <a href="?page={{ pages }}" {% if page.number == pages %}class="actual-page"{% endif %}>{{ pages }}</a>
-        {% endfor %}
-    </div>
+    {% if paginator.num_pages == 1 %}
+    {% else %}
+        <div class="paginator">
+            {% for page_num in paginator.page_range %}
+                <a href="?page={{ page_num }}" {% if page.number == page_num %}class="actual-page"{% endif %}>{{ page_num }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
 
 {% else %}
     <h1 class="no-notes">No notes Found!</h1>
