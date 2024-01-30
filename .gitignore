@@ -23,6 +23,7 @@ __pycache__/
 # Archivos generados
 db.sqlite3
 media/
+static_cdn/
 
 # Dependencias y directorios de instalación
 node_modules/
