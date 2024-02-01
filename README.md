@@ -23,7 +23,7 @@ To run this project, you will need to add the following environment variables to
 `PORT`= DataBase port
 ## Demo
 
-Link to [Live Preview](server-martin.duckdns.org:9999/)
+Link to [Live Preview](http://server-martin.duckdns.org:9999/)
 
 
 ## 🔗 Links
